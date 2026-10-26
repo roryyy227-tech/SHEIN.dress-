@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🎁 رابط من ريناء</title>
+<style>
+  :root{
+    --bg1:#ff6a00; --bg2:#ee0979; --card:#ffffff; --text:#1a1a1a; --accent:#6a11cb;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){ --card:#20202a; --text:#f2f2f2; }
+  }
+  :root[data-theme="dark"]{ --card:#20202a; --text:#f2f2f2; }
+
+  html,body{height:100%;}
+  body{
+    margin:0; display:flex; align-items:center; justify-content:center;
+    font-family: "Tahoma","Segoe UI",sans-serif;
+    background: linear-gradient(135deg,var(--bg1),var(--bg2));
+    background-size:400% 400%;
+    animation: bgmove 6s ease infinite;
+    padding-top: env(safe-area-inset-top,0px);
+    padding-bottom: env(safe-area-inset-bottom,0px);
+    overflow:hidden;
+  }
+  @keyframes bgmove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+  .emoji-rain span{
+    position:fixed; top:-10%; font-size:28px; opacity:.85;
+    animation: fall linear infinite;
+  }
+  @keyframes fall{
+    to{ transform: translateY(110vh) rotate(360deg); }
+  }
+  .card{
+    background:var(--card); color:var(--text);
+    border-radius:24px; padding:32px 24px; max-width:420px; width:90%;
+    text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.35);
+    position:relative; z-index:2;
+    animation: pop .4s ease;
+  }
+  @keyframes pop{
+    0%{ transform:scale(.7); opacity:0; }
+    100%{ transform:scale(1); opacity:1; }
+  }
+  .skull{ font-size:70px; animation: shake 1s infinite; }
+  @keyframes shake{
+    0%,100%{ transform: rotate(0deg); }
+    25%{ transform: rotate(-8deg); }
+    75%{ transform: rotate(8deg); }
+  }
+  h1{ font-size:22px; margin:14px 0 6px; }
+  .bar-wrap{
+    background:rgba(128,128,128,.25); border-radius:999px; height:18px; margin:18px 0;
+    overflow:hidden;
+  }
+  .bar{
+    height:100%; width:0%; border-radius:999px;
+    background:linear-gradient(90deg,#ff512f,#dd2476);
+    transition: width .2s linear;
+  }
+  .pct{ font-weight:bold; font-size:18px; }
+  .fake-log{
+    font-family: monospace; font-size:12px; text-align:right;
+    background:rgba(128,128,128,.15); border-radius:10px; padding:10px;
+    height:70px; overflow:hidden; margin-top:10px; direction:ltr; text-align:left;
+  }
+  .hidden{ display:none; }
+  .reveal{ animation: pop .5s ease; }
+  .reveal h1{ font-size:28px; }
+  .btn{
+    margin-top:18px; border:none; padding:12px 24px; border-radius:999px;
+    background:var(--accent); color:#fff; font-size:16px; font-weight:bold;
+    cursor:pointer;
+  }
+  .sign{ margin-top:16px; font-size:14px; opacity:.7; }
+</style>
+</head>
+<body>
+
+<div class="emoji-rain" id="rain"></div>
+
+<div class="card" id="stage1">
+  <div class="skull">💀😂🔓</div>
+  <h1>تحذير! جاري اختراق جهازك...</h1>
+  <div class="bar-wrap"><div class="bar" id="bar"></div></div>
+  <div class="pct" id="pct">0%</div>
+  <div class="fake-log" id="log"></div>
+</div>
+
+<div class="card hidden reveal" id="stage2">
+  <div style="font-size:70px;">🎉😂🙈</div>
+  <h1>مقلب!! ما صار اختراق ولا شي 😂</h1>
+  <p>بس تنبيه بسيط: لا تفتحون أي رابط من شخص ما تعرفونه أبد!</p>
+  <p>ممكن يكون نفس هالشي بس حقيقي 👀</p>
+  <button class="btn" onclick="document.getElementById('stage2').style.display='none'">تمام فهمت 😄</button>
+  <div class="sign">- من ريناء ❤️</div>
+</div>
+
+<script>
+  // مطر إيموجي للمرح
+  const emojis = ["💀","😂","🔓","⚠️","🙈"];
+  const rain = document.getElementById('rain');
+  for(let i=0;i<22;i++){
+    const s = document.createElement('span');
+    s.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    s.style.left = Math.random()*100 + "%";
+    s.style.animationDuration = (4 + Math.random()*4) + "s";
+    s.style.animationDelay = (Math.random()*4) + "s";
+    rain.appendChild(s);
+  }
+
+  const lines = [
+    "> scanning system files...",
+    "> found photos folder...",
+    "> found contacts.db...",
+    "> bypassing firewall... lol",
+    "> downloading memories.zip",
+    "> uploading to cloud ☁️",
+    "> just kidding, loading joke.exe"
+  ];
+
+  const bar = document.getElementById('bar');
+  const pct = document.getElementById('pct');
+  const log = document.getElementById('log');
+  let p = 0, li = 0;
+
+  const interval = setInterval(() => {
+    p += Math.random()*9 + 4;
+    if(p > 100) p = 100;
+    bar.style.width = p + "%";
+    pct.textContent = Math.floor(p) + "%";
+
+    if(li < lines.length && p > (li+1)*(100/lines.length)){
+      const row = document.createElement('div');
+      row.textContent = lines[li];
+      log.appendChild(row);
+      log.scrollTop = log.scrollHeight;
+      li++;
+    }
+
+    if(p >= 100){
+      clearInterval(interval);
+      setTimeout(() => {
+        document.getElementById('stage1').classList.add('hidden');
+        document.getElementById('stage2').classList.remove('hidden');
+      }, 500);
+    }
+  }, 180);
+</script>
+
+</body>
+</html>
